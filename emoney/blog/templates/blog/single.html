@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+{% load static comments comments_xtd  %}
+
+{% block content %}
+
+ <main id="main">
+    <!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="breadcrumb-hero">
+        <div class="container">
+          <div class="breadcrumb-hero">
+            <h2>Blog</h2>
+            <p>{{blog.summary2|safe}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <ol>
+          <li><a href="{% url 'index' %}">Home</a></li>
+          <li><a href="{% url 'blogurls:blog' %}">Blog</a></li>
+          <li>{{blog.title}}</li>
+        </ol>
+      </div>
+    </section><!-- End Breadcrumbs -->
+
+    <!-- ======= Blog Section ======= -->
+    <section id="blog" class="blog">
+      <div class="container">
+
+        <div class="row">
+
+          <div class="col-lg-8 entries">
+
+            <article class="entry entry-single">
+
+              <div class="entry-img">
+                <img src="{{blog.image.url}}" alt="" class="img-fluid">
+              </div>
+
+              <h2 class="entry-title">
+                <a href="{% url 'blogurls:blog_details' blog.slug %}">{{blog.title}}</a>
+              </h2>
+
+              <div class="entry-meta">
+                <ul>
+                  <li class="d-flex align-items-center"><i class="icofont-user"></i> <a href="blog-single.html">{{blog.author.name}}</a></li>
+                  <li class="d-flex align-items-center"><i class="icofont-wall-clock"></i> <a href="blog-single.html"><time datetime="2020-01-01">{{blog.pub_date_pretty}}</time></a></li>
+                  {% comment %} <li class="d-flex align-items-center"><i class="icofont-comment"></i> <a href="blog-single.html">12 Comments</a></li> {% endcomment %}
+                </ul>
+              </div>
+
+              <div class="entry-content">
+                <p>
+                  {{blog.content|safe}}
+                </p>
+
+                <blockquote>
+                  <i class="icofont-quote-left quote-left"></i>
+                  <p>
+                   adverts
+                  </p>
+                  <i class="las la-quote-right quote-right"></i>
+                  <i class="icofont-quote-right quote-right"></i>
+                </blockquote>
+              </div>
+
+              <div class="entry-footer clearfix">
+                <div class="float-left">
+                  <i class="icofont-folder"></i>
+                  <ul class="cats">
+                    <li><a href="{% url 'blogurls:blog_list_category' blog.slug%}">{{blog.category}}</a></li>
+                  </ul>
+
+                  <i class="icofont-tags"></i>
+                  <ul class="tags">
+                    <li><a href="{% url 'blogurls:tag_list' blog.slug%}">{{blog.tag}}</a></li>
+                  </ul>
+                </div>
+
+                <div class="float-right share">
+                  <a href="" title="Share on Twitter"><i class="icofont-twitter"></i></a>
+                  <a href="" title="Share on Facebook"><i class="icofont-facebook"></i></a>
+                  {% comment %} <a href="" title="Share on Instagram"><i class="icofont-instagram"></i></a> {% endcomment %}
+                  <a href="" title="Share on Whatsapp"><i class="icofont-whatsapp"></i></a>
+                </div>
+
+              </div>
+
+            </article><!-- End blog entry -->
+
+            <div class="blog-author clearfix">
+              <img src="{{blog.author.photo.urls}}" class="rounded-circle float-left" alt="">
+              <h4>{{blog.author.name}}</h4>
+              <div class="social-links">
+                <a href="https://twitters.com/#"><i class="icofont-twitter"></i></a>
+                <a href="https://facebook.com/#"><i class="icofont-facebook"></i></a>
+                {% comment %} <a href="https://instagram.com/#"><i class="icofont-instagram"></i></a> {% endcomment %}
+                <a href="https://whatsapp.com/#"><i class="icofont-whatsapp"></i></a>
+              </div>
+              <p>
+                {{blog.author.about|safe}}
+              </p>
+            </div><!-- End blog author bio -->
+
+            <div class="blog-comments">
+            {% get_comment_count for blog as comment_count %}
+              <div class="py-4 text-center">
+                <a href="{% url 'blogurls:blog' %}">Back to the post list</a>
+                &nbsp;&sdot;&nbsp;
+                {{ comment_count }} comment{{ comment_count|pluralize }}
+                ha{{ comment_count|pluralize:"s,ve" }} been posted.
+            </div>
+            {% if comment_count %}
+              <hr/>
+              <div class="comments">
+                {% render_comment_list for blog %}
+              </div>
+              {% endif %}
+              <div class="reply-form">
+                <h4>Leave a Reply</h4>
+                  <div class="card card-block mb-5">
+                    <div class="card-body">
+                      <h4 class="card-title text-center pb-3">Post your comment</h4>
+                        {% render_comment_form for blog %}
+                    </div>
+                  </div>
+                  {% if comment_count %}
+                    <ul class="media-list">
+                      {% render_xtdcomment_tree for blog %}
+                    </ul>
+                  {% endif %}
+                </form>
+
+              </div>
+
+            </div><!-- End blog comments -->
+
+          </div><!-- End blog entries list -->
+
+          <div class="col-lg-4">
+
+            <div class="sidebar">
+
+              <h3 class="sidebar-title">Search</h3>
+              <div class="sidebar-item search-form">
+                <form method="GET" action="{%url 'blogurls:blog'%}">
+                  {%csrf_token%}
+                  <input name="q" type="search">
+                  <button type="submit"><i class="icofont-search"></i></button>
+                </form>
+
+              </div><!-- End sidebar search formn-->
+
+              <h3 class="sidebar-title">Categories</h3>
+              <div class="sidebar-item categories">
+                {% for cat in category %}
+                  <ul>
+                    <li><a href="{% url 'blogurls:blog_list_category' cat.slug%}">{{cat.types}} <span>({{cat.total_category}})</span></a></li>
+                  </ul>
+                {% endfor %}
+
+              </div><!-- End sidebar categories-->
+
+              <h3 class="sidebar-title">Recent Posts</h3>
+              <div class="sidebar-item recent-posts">
+
+              {% for recent in allblog %}
+                <div class="post-item clearfix">
+                  <img src="{{recent.image.url}}" alt="">
+                  <h4><a href="{% url 'blogurls:blog_details' recent.slug %}">{{recent.title}}</a></h4>
+                  <time datetime="{{recent.published_date}}">{{recent.pub_date_pretty}}</time>
+                </div>
+              {% endfor %}
+              </div><!-- End sidebar recent posts-->
+
+              <h3 class="sidebar-title">Tags</h3>
+              <div class="sidebar-item tags">
+                {% for tag in tagger %}
+                  <ul>
+                    <li><a href="{% url 'blogurls:tag_list' tag.slug%}">{{tag.types}} <span>({{tag.total_tag}})</span></a></li>
+                  </ul>
+                {% endfor %}
+              </div><!-- End sidebar tags-->
+
+            </div><!-- End sidebar -->
+
+          </div><!-- End blog sidebar -->
+
+        </div>
+
+      </div>
+    </section><!-- End Blog Section -->
+{% endblock content %}

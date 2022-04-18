@@ -1,0 +1,6 @@
+requests==2.18.4
+django_ckeditor_5
+django_comments_xtd
+django
+pillow
+django-letsencrypt

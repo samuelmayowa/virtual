@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% trans "Newsletter" %}{% endblock title %}</title>
+    {% block header %}
+    {% endblock header %}
+</head>
+
+<body>
+    <main id="main">
+        <!-- ======= Breadcrumbs ======= -->
+        <section id="breadcrumbs" class="breadcrumbs">
+            <div class="breadcrumb-hero">
+                <div class="container">
+                    <div class="breadcrumb-hero">
+                        <h2>Newsletter</h2>
+                        <p>{{newsletter.title}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <ol>
+                    <li><a href="{% url 'index' %}">Home</a></li>
+                    <li>{{newsletter.title}}</li>
+                </ol>
+            </div>
+        </section><!-- End Breadcrumbs -->
+        <div>
+            {% block body %}
+            {% endblock body %}
+        </div>
+</body>
+
+</html>
+
+{% endblock content %}

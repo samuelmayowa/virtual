@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+  <main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="breadcrumb-hero">
+        <div class="container">
+          <div class="breadcrumb-hero">
+            <h2>{{port_details.title}}</h2>
+            <p>{{port_details.summary2|safe}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <ol>
+          <li><a href="{% url 'index' %}">Home</a></li>
+          <li>{{port_details.title}}</li>
+        </ol>
+      </div>
+    </section><!-- End Breadcrumbs -->
+
+    <!-- ======= Portfolio Details Section ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container">
+
+        <div class="portfolio-details-container">
+
+          <div class="owl-carousel portfolio-details-carousel">
+            {% for slide in port_slide %}
+              <img src="{{slide.slideshow.url}}" class="img-fluid" alt="{{slide.portfolio_name}}">
+            {% endfor %}
+          </div>
+
+          <div class="portfolio-info">
+            <h3>Project information</h3>
+            <ul>
+              <li><strong>Category</strong>: {{port_details.category}}</li>
+              <li><strong>Client</strong>: {{port_details.client}}</li>
+              <li><strong>Project date</strong>: {{port_details.project_date}}</li>
+              <li><strong>Project URL</strong>: <a href="{{port_details.website}}">{{port_details.website}}</a></li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div class="portfolio-description">
+          <h2>{{port_details.summary|safe}}</h2>
+          <p>
+            {{port_details.description|safe}}
+          </p>
+        </div>
+
+      </div>
+
+    </section><!-- End Portfolio Details Section -->
+
+  </main><!-- End #main -->
+
+  {% endblock content %}

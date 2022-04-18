@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- ======= Hero Section ======= -->
+<section id="hero">
+  <div class="hero-container" data-aos="fade-up">
+    <h1>Welcome to TechWagon</h1>
+    <h2>Cryptocurrency News plus technical guide on AI and Python Web Applications</h2>
+  </div>
+</section><!-- End Hero -->
+
+<main id="main">
+
+  <!-- ======= Cta Section ======= -->
+  <section id="cta" class="cta">
+    <div class="container" data-aos="fade-in">
+
+      <div class="text-center">
+        <h3>News Update</h3>
+        <p> Get Best Crypto News World wide</p>
+        <a class="cta-btn" href="{% url 'news' %}">All News</a>
+      </div>
+
+    </div>
+  </section><!-- End Cta Section -->
+  <!-- ======= News Section ======= -->
+  <section id="blog" class="blog mt-5">
+    <div class="container">
+
+      <div class="row">
+        {% for crpt in crypto_api %}
+        <div class="col-lg-4  col-md-6 d-flex align-items-stretch" data-aos="fade-up">
+          <article class="entry">
+            <div class="entry-img img-thumbnail">
+              <img src="{{crpt.imageurl}}" alt="" class="img-fluid">
+            </div>
+
+            <h2 class="entry-title">
+              <a target="new" href="{{crpt.url}} ">{{crpt.title}}</a>
+            </h2>
+            <div class="entry-content">
+              <p>
+                {{crpt.body|slice:":200" |safe}}
+              </p>
+              <div class="read-more">
+                <a href="{{crpt.url}}">Read More</a>
+              </div>
+            </div>
+
+          </article><!-- End blog entry -->
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section><!-- End Blog Section -->
+
+  </div>
+
+  </div>
+  </section><!-- End About Section -->
+
+  <!-- ======= Cta Section ======= -->
+  <section id="cta" class="cta">
+    <div class="container" data-aos="fade-in">
+
+      <div class="text-center">
+        <h3>Blog Posts</h3>
+        <p> Latest blog posts from cryptocurencies and artificial intelligence world</p>
+        <a class="cta-btn" href="{% url 'blogurls:blog' %}">View More</a>
+      </div>
+
+    </div>
+  </section><!-- End Cta Section -->
+
+  <!-- ======= Blog Section ======= -->
+  <section id="blog" class="blog mt-5">
+    <div class="container">
+
+      <div class="row">
+        {% for blogs in blogging %}
+        <div class="col-lg-4  col-md-6 d-flex align-items-stretch" data-aos="fade-up">
+          <article class="entry">
+            <div class="entry-img img-thumbnail">
+              <img src="{{blogs.image.url}}" alt="" class="img-fluid">
+            </div>
+
+            <h2 class="entry-title">
+              <a href="{% url 'blogurls:blog_details' blogs.slug%} ">{{blogs.title}}</a>
+            </h2>
+
+            <div class="entry-meta">
+              <ul>
+                <li class="d-flex align-items-center"><i class="icofont-user"></i> <a
+                    href="{%url 'about'%}">{{blogs.author.name}}</a></li>
+                <li class="d-flex align-items-center"><i class="icofont-wall-clock"></i> <a href=""><time
+                      datetime="{{blogs.published_date}}">{{blogs.pub_date_pretty}}</time></a></li>
+              </ul>
+            </div>
+
+            <div class="entry-content">
+              <p>
+                {{blogs.summary2|safe}}
+              </p>
+              <div class="read-more">
+                <a href="{% url 'blogurls:blog_details' blogs.slug %}">Read More</a>
+              </div>
+            </div>
+
+          </article><!-- End blog entry -->
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section><!-- End Blog Section -->
+
+
+  <!-- ======= Cta Section ======= -->
+  <section id="cta" class="cta">
+    <div class="container" data-aos="fade-in">
+
+      <div class="text-center">
+        <h3>Portfolio</h3>
+        <p> Recent works both deployed and available for deployment</p>
+        <a class="cta-btn" href="{% url 'portfolio:portfolio_view' %}">All Projects</a>
+      </div>
+
+    </div>
+  </section><!-- End Cta Section -->
+
+  <!-- ======= Portfolio Section ======= -->
+  <section id="portfolio" class="portfolio mt-4">
+    <div class="container">
+
+      <div class="row">
+        <div class="col-lg-12 d-flex justify-content-center" data-aos="fade-up">
+          <ul id="portfolio-flters">
+            <li data-filter="*" class="filter-active">All</li>
+            <li data-filter=".filter-app">Cryptocurrencies</li>
+            <li data-filter=".filter-card">Web Development</li>
+            <li data-filter=".filter-web">Artificial Intelligence</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row portfolio-container" data-aos="fade-up">
+        {% for aiport in aiport %}
+
+        <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+          <div class="portfolio-wrap">
+            <img src="{{aiport.featured.url}}" class="img-fluid" alt="">
+            <div class="portfolio-info">
+              <h4>{{aiport.title}}</h4>
+              <p>
+                {{aiport.summary|safe}}
+              </p>
+              <div class="portfolio-links">
+                <a href="{% url 'portfolio:portfolio_details' aiport.slug %}" title="More Details"><i
+                    class="bx bx-link"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {%endfor%}
+        {% for cryp_port in cryp_port %}
+        <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+          <div class="portfolio-wrap">
+            <img src="{{cryp_port.featured.url}}" class="img-fluid" alt="">
+            <div class="portfolio-info">
+              <h4>{{cryp_port.title}}</h4>
+              <p>{{cryp_port.summary}}</p>
+              <div class="portfolio-links">
+                <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        {%for forex_port in web%}
+        <div class="col-lg-4 col-md-6 portfolio-item filter-card">
+          <div class="portfolio-wrap">
+            <img src="{{forex_port.featured.url}}" class="img-fluid" alt="">
+            <div class="portfolio-info">
+              <h4>{{forex_port.title}}</h4>
+              <p>{{forex_port.summary}}</p>
+              <div class="portfolio-links">
+                <a href="{{forex_port.featured.url}}" data-gall="portfolioGallery" class="venobox"
+                  title="{{forex_port.title}}"><i class="bx bx-plus"></i></a>
+                <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section><!-- End Portfolio Section -->
+
+
+</main><!-- End #main -->
+{% endblock content %}

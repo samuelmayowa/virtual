@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+  <main id="main">
+
+ <section id="cta" class="cta">
+      <div class="container" data-aos="fade-in">
+
+        <div class="text-center">
+          <h3>News Update</h3>
+          <p> Get Best Crypto News World wide</p>
+          <a class="cta-btn" href="{% url 'news' %}">All News</a>
+        </div>
+
+      </div>
+    </section><!-- End Cta Section -->
+  <!-- ======= News Section ======= -->
+    <section id="blog" class="blog mt-5">
+      <div class="container">
+
+        <div class="row">
+        {% for crpt in crypto_api %}
+          <div class="col-lg-4  col-md-6 d-flex align-items-stretch" data-aos="fade-up">
+            <article class="entry">
+              <div class="entry-img img-thumbnail">
+                <img src="{{crpt.imageurl}}" alt="" class="img-fluid">
+              </div>
+
+              <h2 class="entry-title">
+                <a href="{{crpt.url}} ">{{crpt.title}}</a>
+              </h2>
+              <div class="entry-content">
+                <p>
+                  {{crpt.body|safe}}
+                </p>
+                <div class="read-more">
+                  <a href="{{crpt.url}}">Read More</a>
+                </div>
+              </div>
+
+            </article><!-- End blog entry -->
+          </div>
+        {% endfor %}
+        </div>
+
+    <div class="row">
+        {% for ai in ai.articles %}
+          <div class="col-lg-4  col-md-6 d-flex align-items-stretch" data-aos="fade-up">
+            <article class="entry">
+              <div class="entry-img img-thumbnail">
+                <img src="{{ai.top_image}}" alt="" class="img-fluid">
+              </div>
+
+              <h2 class="entry-title">
+                <a href="{{ai.url}} ">{{ai.title}}</a>
+              </h2>
+              <div class="entry-content">
+                <p>
+                  {{ai.summary|safe}}
+                </p>
+                <div class="read-more">
+                  <a href="{{ai.url}}">Read More</a>
+                </div>
+              </div>
+
+            </article><!-- End blog entry -->
+          </div>
+        {% endfor %}
+        </div>
+      </div>
+    </section><!-- End Blog Section -->
+
+
+  </main><!-- End #main -->
+
+{% endblock content %}

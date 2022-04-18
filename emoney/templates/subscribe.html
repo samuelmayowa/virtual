@@ -1,0 +1,8 @@
+          <div class="col-lg-3 col-md-6 footer-newsletter">
+            <h4>Our Newsletter</h4>
+            <p>Be the first to get our new update by subscribing to our newsletter.</p>
+            <form enctype="multipart/form-data" method="post" action="/newsletter/crypto-guide-and-new-project/subscribe/">
+              {% csrf_token %}
+              <input placeholder="Your email address" id="id_email_field" type="email" name="email"><input type="submit" value="Subscribe">
+            </form>
+          </div>
